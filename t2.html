@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function GetItemsData() {
+						var c = 0 ;
+						var pincode = document.getElementById("pincode").value;
+						var date = document.getElementById("date").value.toString().split("-").reverse().join("-");
+						var centerName = document.getElementById("cname").value.toString().split("-").reverse().join("-");
+						var url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode="+pincode+"&date="+date;
+						
+						fetch(url)
+						.then(function (response) {
+						return response.json();
+					  })
+					  .then(function (myJson) {
+						var val = myJson.centers;
+						if(val.length > 0){
+						
+						for(var i=0;i<val.length;i++){
+						if(val[i].name.indexOf(centerName) > -1 && centerName != "")
+						{
+						 var audio = new Audio("https://cdn.noises.online/NoisesOnline/Audio/da.ogg");
+						 if(c == 0){
+						  c++;
+						 	 audio.play();
+						}	
+						
+						}
+
+						
+						
+						 }
+							
+						 }
+		
+						
+						}).catch(function (error) {
+					console.log("Error: " + error);
+					alert("No Data");
+				  });
+					  }
+					  
+function myFunction() {
+myVar = setInterval(GetItemsData, 6000);
+//GetItemsData();
+}
+</script>
+</head>
+<body>
+
+<h2>Covid Vaccine Notification System</h2>
+
+<form >
+  <label for="pin">Pin Code:</label><br>
+  <input type="number" id="pincode" name="pin" value="811214"><br>
+  <label for="date">Date:</label><br>
+  <input type="date" id="date" name="date"  value="2021-05-21"><br>
+  <label for="CName">Center Name:</label><br>
+  <input type="text" id="cname" name="CName" value="18"><br><br>
+  
+</form> 
+<button type="button" onclick="myFunction()">Get Notification</button>
+
+</body>
+</html> 
